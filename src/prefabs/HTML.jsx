@@ -49,3 +49,7 @@ export function a$html() {
 export function img$html() {
   return <img src="https://picsum.photos/200/300" />;
 }
+
+export function button$html() {
+  return <button type="button">button</button>;
+}

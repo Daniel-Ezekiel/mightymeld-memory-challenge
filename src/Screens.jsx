@@ -16,17 +16,57 @@ export const possibleTileContents = [
   icons.GiOpenBook,
 ];
 
-export function StartScreen({ start }) {
+export function StartScreen({ start, setModeCount, setModeName }) {
   return (
-    <div className="min-h-[100dvh] w-screen p-8 grid place-items-center text-pink-500 text-center">
-      <div className="max-w-[21rem] h-[21rem] w-full pb-12 flex flex-col justify-center items-center gap-5 bg-pink-50 rounded-lg">
-        <h1 className="font-bold text-3xl">Memory</h1>
+    <div className='min-h-[100dvh] w-screen p-8 grid place-items-center text-pink-500 text-center'>
+      <div
+        className={
+          "max-w-[21rem] h-[21rem] w-full pt-6 pb-12 flex flex-col justify-center items-center gap-5 bg-pink-50 rounded-lg"
+        }
+      >
+        <h1 className='font-bold text-3xl'>Memory</h1>
 
         <p>Flip over tiles looking for pairs</p>
 
+        <div className='mt-4 grid grid-cols-3 gap-3'>
+          <button
+            type='button'
+            className='bg-pink-200 px-2 py-1 rounded-lg flex flex-col items-center justify-center'
+            onClick={() => {
+              setModeCount(8);
+              setModeName("Easy");
+            }}
+          >
+            Easy
+            <span>8 Tiles</span>
+          </button>
+          <button
+            type='button'
+            className='bg-pink-200 px-2 py-1 rounded-lg flex flex-col items-center justify-center'
+            onClick={() => {
+              setModeCount(16);
+              setModeName("Medium");
+            }}
+          >
+            Medium
+            <span>16 Tiles</span>
+          </button>
+          <button
+            type='button'
+            className='bg-pink-200 px-2 py-1 rounded-lg flex flex-col items-center justify-center'
+            onClick={() => {
+              setModeCount(24);
+              setModeName("Hard");
+            }}
+          >
+            Hard
+            <span>24 tiles</span>
+          </button>
+        </div>
+
         <button
+          className='w-[8rem] py-2 bg-gradient-to-b from-pink-400 to-pink-600 rounded-full text-lg text-white'
           onClick={start}
-          className="w-[8rem] mt-4 py-2 bg-gradient-to-b from-pink-400 to-pink-600 rounded-full text-lg text-white"
         >
           Play
         </button>
@@ -35,9 +75,11 @@ export function StartScreen({ start }) {
   );
 }
 
-export function PlayScreen({ end }) {
+export function PlayScreen({ end, tileCount, modeTitle }) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
+
+  const bestScore = localStorage.getItem("bestScore");
 
   const getTiles = (tileCount) => {
     // Throw error if count is not even.
@@ -100,6 +142,13 @@ export function PlayScreen({ end }) {
 
           // If all tiles are matched, the game is over.
           if (newTiles.every((tile) => tile.state === "matched")) {
+            // First game played, set best score.
+            !bestScore && localStorage.setItem("bestScore", tryCount + 1);
+
+            // Compare existing best score with current tries
+            bestScore && Number(bestScore) > tryCount
+              ? localStorage.setItem("bestScore", tryCount + 1)
+              : null;
             setTimeout(end, 0);
           }
 
@@ -118,19 +167,39 @@ export function PlayScreen({ end }) {
 
   return (
     <>
-      <div className="min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center">
-        <div className="max-w-[21rem] flex flex-col gap-10 justify-center items-center">
-          <span className="flex items-center gap-2">
+      <div className='min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center'>
+        <div className='max-w-[21rem] grid grid-cols-6 gap-y-5'>
+          <h1 className='mb-4 col-span-full font-bold text-3xl'>
+            <span className='mr-2'>{modeTitle}</span>
+            Mode
+          </h1>
+          <span className='col-span-3 flex items-center gap-2'>
             Tries{" "}
-            <span className="bg-indigo-200 px-2 rounded-md">{tryCount}</span>
+            <span className='bg-indigo-200 px-2 rounded-md'>{tryCount}</span>
           </span>
-          <div className="p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4">
-            {getTiles(16).map((tile, i) => (
+          <span className='col-span-3 place-self-end flex items-center gap-2'>
+            Best Score
+            <span className='bg-indigo-200 px-2 rounded-md'>
+              {bestScore || "--"}
+            </span>
+          </span>
+          <div className='col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4'>
+            {getTiles(tileCount).map((tile, i) => (
               <Tile key={i} flip={() => flip(i)} {...tile} />
             ))}
+          </div>
+          <div className='col-span-full'>
+            <button
+              type='button'
+              className='bg-indigo-200 px-3 py-1 rounded-lg active:scale-95'
+              onClick={end}
+            >
+              Restart
+            </button>
           </div>
         </div>
       </div>
     </>
   );
 }
+

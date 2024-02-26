@@ -18,54 +18,54 @@ export const possibleTileContents = [
 
 export function StartScreen({ start, setModeCount, setModeName }) {
   return (
-    <div className='min-h-[100dvh] w-screen p-8 grid place-items-center text-pink-500 text-center'>
+    <div className="min-h-[100dvh] w-screen p-8 grid place-items-center text-pink-500 text-center">
       <div
         className={
           "max-w-[21rem] h-[21rem] w-full pt-6 pb-12 flex flex-col justify-center items-center gap-5 bg-pink-50 rounded-lg"
         }
       >
-        <h1 className='font-bold text-3xl'>Memory</h1>
+        <h1 className="font-bold text-3xl">Memory</h1>
 
         <p>Flip over tiles looking for pairs</p>
 
-        <div className='mt-4 grid grid-cols-3 gap-3'>
+        <div className="h-[4rem] px-6 mt-4 grid place-items-center grid-cols-3 gap-4">
           <button
-            type='button'
-            className='bg-pink-200 px-2 py-1 rounded-lg flex flex-col items-center justify-center'
+            type="button"
+            className="h-fit bg-pink-200 px-3 py-1 rounded-md flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold"
             onClick={() => {
               setModeCount(8);
               setModeName("Easy");
             }}
           >
             Easy
-            <span>8 Tiles</span>
+            <span className="font-normal">8 Tiles</span>
           </button>
           <button
-            type='button'
-            className='bg-pink-200 px-2 py-1 rounded-lg flex flex-col items-center justify-center'
+            type="button"
+            className="bg-pink-200 px-3 py-1 rounded-md flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold"
             onClick={() => {
               setModeCount(16);
               setModeName("Medium");
             }}
           >
             Medium
-            <span>16 Tiles</span>
+            <span className="font-normal">16 Tiles</span>
           </button>
           <button
-            type='button'
-            className='bg-pink-200 px-2 py-1 rounded-lg flex flex-col items-center justify-center'
+            type="button"
+            className="bg-pink-200 px-3 py-1 rounded-lg flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold"
             onClick={() => {
               setModeCount(24);
               setModeName("Hard");
             }}
           >
             Hard
-            <span>24 tiles</span>
+            <span className="font-normal">24 tiles</span>
           </button>
         </div>
 
         <button
-          className='w-[8rem] py-2 bg-gradient-to-b from-pink-400 to-pink-600 rounded-full text-lg text-white'
+          className="w-[8rem] py-2 bg-gradient-to-b from-pink-400 to-pink-600 rounded-full text-lg text-white"
           onClick={start}
         >
           Play
@@ -75,7 +75,13 @@ export function StartScreen({ start, setModeCount, setModeName }) {
   );
 }
 
-export function PlayScreen({ end, tileCount, modeName }) {
+export function PlayScreen({
+  end,
+  tileCount,
+  setModeCount,
+  modeName,
+  setModeName,
+}) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
 
@@ -179,32 +185,36 @@ export function PlayScreen({ end, tileCount, modeName }) {
 
   return (
     <>
-      <div className='min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center'>
-        <div className='max-w-[21rem] grid grid-cols-6 gap-y-5'>
-          <h1 className='mb-4 col-span-full font-bold text-3xl'>
-            <span className='mr-2'>{modeName}</span>
+      <div className="min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center">
+        <div className="max-w-[21rem] grid grid-cols-6 gap-y-5">
+          <h1 className="mb-4 col-span-full font-bold text-3xl">
+            <span className="mr-2">{modeName}</span>
             Mode
           </h1>
-          <span className='col-span-3 flex items-center gap-2'>
+          <span className="col-span-3 flex items-center gap-2">
             Tries{" "}
-            <span className='bg-indigo-200 px-2 rounded-md'>{tryCount}</span>
+            <span className="bg-indigo-200 px-2 rounded-md">{tryCount}</span>
           </span>
-          <span className='col-span-3 place-self-end flex items-center gap-2'>
+          <span className="col-span-3 place-self-end flex items-center gap-2">
             Best Score
-            <span className='bg-indigo-200 px-2 rounded-md'>
+            <span className="bg-indigo-200 px-2 rounded-md">
               {bestScore || "--"}
             </span>
           </span>
-          <div className='col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4'>
+          <div className="col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4">
             {getTiles(tileCount).map((tile, i) => (
               <Tile key={i} flip={() => flip(i)} {...tile} />
             ))}
           </div>
-          <div className='col-span-full'>
+          <div className="col-span-full">
             <button
-              type='button'
-              className='bg-indigo-200 px-3 py-1 rounded-lg active:scale-95'
-              onClick={end}
+              type="button"
+              className="bg-indigo-200 px-3 py-1 rounded-lg active:scale-95"
+              onClick={() => {
+                end();
+                setModeCount(null);
+                setModeName(null);
+              }}
             >
               Restart
             </button>
@@ -214,4 +224,3 @@ export function PlayScreen({ end, tileCount, modeName }) {
     </>
   );
 }
-

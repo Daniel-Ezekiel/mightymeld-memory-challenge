@@ -26,7 +26,9 @@ function App() {
         <PlayScreen
           end={() => setGameState("start")}
           tileCount={modeCount}
+          setModeCount={setModeCount}
           modeName={modeName}
+          setModeName={setModeName}
         />
       );
     default:

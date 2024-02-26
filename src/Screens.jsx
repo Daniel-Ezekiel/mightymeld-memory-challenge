@@ -78,13 +78,13 @@ export function StartScreen({ start, setModeCount, setModeName }) {
       </div>
       <button
         type="button"
-        className="mt-5 font-semibold underline"
+        className="mt-6 font-semibold \n underline text-center px-4"
         onClick={() => setShowScores(true)}
       >
-        View Best 5 scores
+        View best 5 scores for all modes
       </button>
       {showScores && (
-        <div className="max-w-[23rem] w-full h-[26rem] p-6 py-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg grid grid-cols-3 justify-center border-2 border-pink-400">
+        <div className="max-w-[23rem] w-full h-[26rem] p-6 pt-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg grid grid-cols-3 justify-center border-2 border-pink-400">
           <div>
             <h3 className="font-semibold text-xl mb-4">Easy</h3>
             <div>
@@ -130,7 +130,7 @@ export function StartScreen({ start, setModeCount, setModeName }) {
           </div>
           <button
             type="button"
-            className="col-span-full w-[4rem] mx-auto bg-pink-100 h-fit p-3 rounded-lg active:scale-95"
+            className="col-span-full w-24 mx-auto bg-pink-100 h-fit p-2 rounded-lg active:scale-95 my-auto"
             onClick={() => setShowScores(false)}
           >
             Close
@@ -151,6 +151,7 @@ export function PlayScreen({
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
   const [completed, setCompleted] = useState(false);
+  const [showScores, setShowScores] = useState(false);
 
   const bestScore =
     modeName == "Easy"
@@ -167,6 +168,10 @@ export function PlayScreen({
           .getItem("hardBestScore")
           ?.split(";")
           .sort((a, z) => Number(a) - Number(z))[0];
+
+  const bestScores = localStorage
+    .getItem(`${modeName.toLowerCase()}BestScore`)
+    .split(";");
 
   const getTiles = (tileCount) => {
     // Throw error if count is not even.
@@ -298,9 +303,15 @@ export function PlayScreen({
               </div>
             )}
           </div>
-          <div className="col-span-full">
+
+          <div className="col-span-full flex justify-between">
             <button
-              type="button"
+              className="underline font-semibold"
+              onClick={() => setShowScores(true)}
+            >
+              View mode&apos;s best scores
+            </button>
+            <button
               className="bg-indigo-200 px-3 py-1 rounded-lg active:scale-95"
               onClick={() => {
                 end();
@@ -311,6 +322,31 @@ export function PlayScreen({
               {completed ? "End Game" : "Restart"}
             </button>
           </div>
+
+          {showScores && (
+            <div className="max-w-[23rem] w-full h-[26rem] p-6 py-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg border-2 border-indigo-400 flex flex-col">
+              <div className="w-full">
+                <h3 className="font-semibold text-xl mb-4">{modeName} Mode</h3>
+                <div>
+                  {!bestScores.length ? (
+                    "No data"
+                  ) : (
+                    <ul className="text-lg">
+                      {bestScores.map((score, index) => (
+                        <li key={index}>{score}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </div>
+              <button
+                className="mt-auto bg-indigo-100 w-fit p-2 rounded-lg w-24 mx-auto"
+                onClick={() => setShowScores(false)}
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>

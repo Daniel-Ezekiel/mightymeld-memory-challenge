@@ -5,20 +5,19 @@ function App() {
   const [gameState, setGameState] = useState("start");
   const [modeName, setModeName] = useState(null);
   const [modeCount, setModeCount] = useState(null);
+  const [showCaution, setShowCaution] = useState(false);
 
   switch (gameState) {
     case "start":
       return (
         <StartScreen
           start={() =>
-            modeCount
-              ? setGameState("play")
-              : alert(
-                  "Please choose a game mode between 'Easy', Medium' and 'Hard'"
-                )
+            modeCount ? setGameState("play") : setShowCaution(true)
           }
           setModeCount={setModeCount}
           setModeName={setModeName}
+          showCaution={showCaution}
+          setShowCaution={setShowCaution}
         />
       );
     case "play":

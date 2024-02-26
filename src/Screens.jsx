@@ -16,7 +16,13 @@ export const possibleTileContents = [
   icons.GiOpenBook,
 ];
 
-export function StartScreen({ start, setModeCount, setModeName }) {
+export function StartScreen({
+  start,
+  setModeCount,
+  setModeName,
+  showCaution,
+  setShowCaution,
+}) {
   const [showScores, setShowScores] = useState(false);
   const easyScores = localStorage.getItem("easyBestScore")?.split(";");
   const mediumScores = localStorage.getItem("mediumBestScore")?.split(";");
@@ -135,6 +141,22 @@ export function StartScreen({ start, setModeCount, setModeName }) {
           >
             Close
           </button>
+        </div>
+      )}
+      {showCaution && (
+        <div className="fixed :top-0 :left-0 h-full w-full bg-black bg-opacity-40 backdrop-blur">
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full   max-w-[23rem] h-[15rem] text-center p-4 bg-white flex items-center flex-col justify-between py-8 shadow-lg border border-pink-400">
+            <p>
+              Please choose a game mode between 'Easy', Medium' and 'Hard' to
+              continue
+            </p>
+            <button
+              className="bg-pink-100 w-24 p-2 rounded-lg active:scale-95 transition-transform ease-in-out duration-300"
+              onClick={() => setShowCaution(false)}
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>

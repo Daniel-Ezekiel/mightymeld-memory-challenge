@@ -43,14 +43,13 @@ export function p$html() {
 }
 
 export function a$html() {
-  return <a href='https://example.com'>Link</a>;
+  return <a href="https://example.com">Link</a>;
 }
 
 export function img$html() {
-  return <img src='https://picsum.photos/200/300' />;
+  return <img src="https://picsum.photos/200/300" />;
 }
 
 export function button$html() {
-  return <button type='button'>button</button>;
+  return <button type="button">button</button>;
 }
-

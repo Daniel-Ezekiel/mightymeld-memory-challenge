@@ -84,6 +84,7 @@ export function PlayScreen({
 }) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
+  const [completed, setCompleted] = useState(false);
 
   const bestScore =
     modeName == "Easy"
@@ -167,7 +168,9 @@ export function PlayScreen({
                   tryCount + 1
                 )
               : null;
-            setTimeout(end, 0);
+
+            setCompleted(true);
+            // setTimeout(end, 3000);
           }
 
           return newTiles;
@@ -201,10 +204,17 @@ export function PlayScreen({
               {bestScore || "--"}
             </span>
           </span>
-          <div className="col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4">
+          <div className="relative col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4 overflow-hidden">
             {getTiles(tileCount).map((tile, i) => (
               <Tile key={i} flip={() => flip(i)} {...tile} />
             ))}
+            {completed && (
+              <div className="absolute border bg-indigo-100 bg-opacity-40 backdrop-blur top-0 left-0 w-full h-full flex items-center justify-center">
+                <p className="text-center font-bold text-3xl text-indigo-500">
+                  Game Complete!
+                </p>
+              </div>
+            )}
           </div>
           <div className="col-span-full">
             <button
@@ -216,7 +226,7 @@ export function PlayScreen({
                 setModeName(null);
               }}
             >
-              Restart
+              {completed ? "End Game" : "Restart"}
             </button>
           </div>
         </div>

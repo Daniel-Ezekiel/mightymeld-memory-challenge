@@ -17,8 +17,13 @@ export const possibleTileContents = [
 ];
 
 export function StartScreen({ start, setModeCount, setModeName }) {
+  const [showScores, setShowScores] = useState(false);
+  const easyScores = localStorage.getItem("easyBestScore")?.split(";");
+  const mediumScores = localStorage.getItem("mediumBestScore")?.split(";");
+  const hardScores = localStorage.getItem("hardBestScore")?.split(";");
+
   return (
-    <div className="min-h-[100dvh] w-screen p-8 grid place-items-center text-pink-500 text-center">
+    <div className="min-h-[100dvh] w-screen p-8 flex flex-col items-center justify-center text-pink-500 text-center">
       <div
         className={
           "max-w-[21rem] h-[21rem] w-full pt-6 pb-12 flex flex-col justify-center items-center gap-5 bg-pink-50 rounded-lg"
@@ -71,6 +76,67 @@ export function StartScreen({ start, setModeCount, setModeName }) {
           Play
         </button>
       </div>
+      <button
+        type="button"
+        className="mt-5 font-semibold underline"
+        onClick={() => setShowScores(true)}
+      >
+        View Best 5 scores
+      </button>
+      {showScores && (
+        <div className="max-w-[23rem] w-full h-[26rem] p-6 py-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg grid grid-cols-3 justify-center border-2 border-pink-400">
+          <div>
+            <h3 className="font-semibold text-xl mb-4">Easy</h3>
+            <div>
+              {!easyScores ? (
+                "No data"
+              ) : (
+                <ul>
+                  {easyScores.map((score, index) => (
+                    <li key={index}>{score}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-xl mb-4">Medium</h3>
+            <div>
+              {!mediumScores ? (
+                "No data"
+              ) : (
+                <ul>
+                  {mediumScores.map((score, index) => (
+                    <li key={index}>{score}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold text-xl mb-4">Hard</h3>
+            <div>
+              {!hardScores ? (
+                "No data"
+              ) : (
+                <ul>
+                  {hardScores.map((score, index) => (
+                    <li key={index}>{score}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+          <button
+            type="button"
+            className="col-span-full w-[4rem] mx-auto bg-pink-100 h-fit p-3 rounded-lg active:scale-95"
+            onClick={() => setShowScores(false)}
+          >
+            Close
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -88,10 +154,19 @@ export function PlayScreen({
 
   const bestScore =
     modeName == "Easy"
-      ? localStorage.getItem("easyBestScore")
+      ? localStorage
+          .getItem("easyBestScore")
+          ?.split(";")
+          .sort((a, z) => Number(a) - Number(z))[0]
       : modeName == "Medium"
-      ? localStorage.getItem("mediumBestScore")
-      : localStorage.getItem("hardBestScore");
+      ? localStorage
+          .getItem("mediumBestScore")
+          ?.split(";")
+          .sort((a, z) => Number(a) - Number(z))[0]
+      : localStorage
+          .getItem("hardBestScore")
+          ?.split(";")
+          .sort((a, z) => Number(a) - Number(z))[0];
 
   const getTiles = (tileCount) => {
     // Throw error if count is not even.
@@ -162,12 +237,19 @@ export function PlayScreen({
               );
 
             // Compare existing best score with current tries
-            bestScore && Number(bestScore) > tryCount
-              ? localStorage.setItem(
-                  `${modeName.toLowerCase()}BestScore`,
-                  tryCount + 1
-                )
-              : null;
+            const prevItems = localStorage.getItem(
+              `${modeName.toLowerCase()}BestScore`
+            );
+            const newBestScores = `${prevItems};${tryCount + 1}`;
+
+            bestScore &&
+              localStorage.setItem(
+                `${modeName.toLowerCase()}BestScore`,
+                [...new Set(newBestScores.split(";"))]
+                  .sort((a, z) => Number(a) - Number(z))
+                  .slice(0, 6)
+                  .join(";")
+              );
 
             setCompleted(true);
             // setTimeout(end, 3000);

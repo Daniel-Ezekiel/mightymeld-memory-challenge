@@ -29,70 +29,70 @@ export function StartScreen({
   const hardScores = localStorage.getItem("hardBestScore")?.split(";");
 
   return (
-    <div className="min-h-[100dvh] w-screen p-8 flex flex-col items-center justify-center text-pink-500 text-center">
+    <div className='min-h-[100dvh] w-screen p-8 flex flex-col items-center justify-center text-pink-500 text-center'>
       <div
         className={
           "max-w-[21rem] h-[21rem] w-full pt-6 pb-12 flex flex-col justify-center items-center gap-5 bg-pink-50 rounded-lg"
         }
       >
-        <h1 className="font-bold text-3xl">Memory</h1>
+        <h1 className='font-bold text-3xl'>Memory</h1>
 
         <p>Flip over tiles looking for pairs</p>
 
-        <div className="h-[4rem] px-6 mt-4 grid place-items-center grid-cols-3 gap-4">
+        <div className='h-[4rem] px-6 mt-4 grid place-items-center grid-cols-3 gap-4'>
           <button
-            type="button"
-            className="h-fit bg-pink-200 px-3 py-1 rounded-md flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold"
+            type='button'
+            className='h-fit bg-pink-200 px-3 py-1 rounded-md flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold'
             onClick={() => {
               setModeCount(8);
               setModeName("Easy");
             }}
           >
             Easy
-            <span className="font-normal">8 Tiles</span>
+            <span className='font-normal'>8 Tiles</span>
           </button>
           <button
-            type="button"
-            className="bg-pink-200 px-3 py-1 rounded-md flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold"
+            type='button'
+            className='bg-pink-200 px-3 py-1 rounded-md flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold'
             onClick={() => {
               setModeCount(16);
               setModeName("Medium");
             }}
           >
             Medium
-            <span className="font-normal">16 Tiles</span>
+            <span className='font-normal'>16 Tiles</span>
           </button>
           <button
-            type="button"
-            className="bg-pink-200 px-3 py-1 rounded-lg flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold"
+            type='button'
+            className='bg-pink-200 px-3 py-1 rounded-lg flex flex-col items-center justify-center focus:border-2 focus:border-pink-500 active:scale-95 transition-transform ease-in-out duration-300 font-semibold'
             onClick={() => {
               setModeCount(24);
               setModeName("Hard");
             }}
           >
             Hard
-            <span className="font-normal">24 tiles</span>
+            <span className='font-normal'>24 tiles</span>
           </button>
         </div>
 
         <button
-          className="w-[8rem] py-2 bg-gradient-to-b from-pink-400 to-pink-600 rounded-full text-lg text-white"
+          className='w-[8rem] py-2 bg-gradient-to-b from-pink-400 to-pink-600 rounded-full text-lg text-white'
           onClick={start}
         >
           Play
         </button>
       </div>
       <button
-        type="button"
-        className="mt-6 font-semibold \n underline text-center px-4"
+        type='button'
+        className='mt-6 font-semibold \n underline text-center px-4'
         onClick={() => setShowScores(true)}
       >
         View best 5 scores for all modes
       </button>
       {showScores && (
-        <div className="max-w-[23rem] w-full h-[26rem] p-6 pt-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg grid grid-cols-3 justify-center border-2 border-pink-400">
+        <div className='max-w-[23rem] w-full h-[26rem] p-6 pt-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg grid grid-cols-3 justify-center border-2 border-pink-400'>
           <div>
-            <h3 className="font-semibold text-xl mb-4">Easy</h3>
+            <h3 className='font-semibold text-xl mb-4'>Easy</h3>
             <div>
               {!easyScores ? (
                 "No data"
@@ -107,7 +107,7 @@ export function StartScreen({
           </div>
 
           <div>
-            <h3 className="font-semibold text-xl mb-4">Medium</h3>
+            <h3 className='font-semibold text-xl mb-4'>Medium</h3>
             <div>
               {!mediumScores ? (
                 "No data"
@@ -121,7 +121,7 @@ export function StartScreen({
             </div>
           </div>
           <div>
-            <h3 className="font-semibold text-xl mb-4">Hard</h3>
+            <h3 className='font-semibold text-xl mb-4'>Hard</h3>
             <div>
               {!hardScores ? (
                 "No data"
@@ -135,8 +135,8 @@ export function StartScreen({
             </div>
           </div>
           <button
-            type="button"
-            className="col-span-full w-24 mx-auto bg-pink-100 h-fit p-2 rounded-lg active:scale-95 my-auto"
+            type='button'
+            className='col-span-full w-24 mx-auto bg-pink-100 h-fit p-2 rounded-lg active:scale-95 my-auto'
             onClick={() => setShowScores(false)}
           >
             Close
@@ -144,14 +144,14 @@ export function StartScreen({
         </div>
       )}
       {showCaution && (
-        <div className="fixed :top-0 :left-0 h-full w-full bg-black bg-opacity-40 backdrop-blur">
-          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full   max-w-[23rem] h-[15rem] text-center p-4 bg-white flex items-center flex-col justify-between py-8 shadow-lg border border-pink-400">
+        <div className='fixed :top-0 :left-0 h-full w-full bg-black bg-opacity-40 backdrop-blur'>
+          <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full   max-w-[23rem] h-[15rem] text-center p-4 bg-white flex items-center flex-col justify-between py-8 shadow-lg border border-pink-400'>
             <p>
               Please choose a game mode between 'Easy', Medium' and 'Hard' to
               continue
             </p>
             <button
-              className="bg-pink-100 w-24 p-2 rounded-lg active:scale-95 transition-transform ease-in-out duration-300"
+              className='bg-pink-100 w-24 p-2 rounded-lg active:scale-95 transition-transform ease-in-out duration-300'
               onClick={() => setShowCaution(false)}
             >
               Close
@@ -193,7 +193,7 @@ export function PlayScreen({
 
   const bestScores = localStorage
     .getItem(`${modeName.toLowerCase()}BestScore`)
-    .split(";");
+    ?.split(";");
 
   const getTiles = (tileCount) => {
     // Throw error if count is not even.
@@ -297,44 +297,44 @@ export function PlayScreen({
 
   return (
     <>
-      <div className="min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center">
-        <div className="max-w-[21rem] grid grid-cols-6 gap-y-5">
-          <h1 className="mb-4 col-span-full font-bold text-3xl">
-            <span className="mr-2">{modeName}</span>
+      <div className='min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center'>
+        <div className='max-w-[21rem] grid grid-cols-6 gap-y-5'>
+          <h1 className='mb-4 col-span-full font-bold text-3xl'>
+            <span className='mr-2'>{modeName}</span>
             Mode
           </h1>
-          <span className="col-span-3 flex items-center gap-2">
+          <span className='col-span-3 flex items-center gap-2'>
             Tries{" "}
-            <span className="bg-indigo-200 px-2 rounded-md">{tryCount}</span>
+            <span className='bg-indigo-200 px-2 rounded-md'>{tryCount}</span>
           </span>
-          <span className="col-span-3 place-self-end flex items-center gap-2">
+          <span className='col-span-3 place-self-end flex items-center gap-2'>
             Best Score
-            <span className="bg-indigo-200 px-2 rounded-md">
+            <span className='bg-indigo-200 px-2 rounded-md'>
               {bestScore || "--"}
             </span>
           </span>
-          <div className="relative col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4 overflow-hidden">
+          <div className='relative col-span-full p-4 bg-indigo-50 rounded-lg grid grid-cols-4 gap-4 overflow-hidden'>
             {getTiles(tileCount).map((tile, i) => (
               <Tile key={i} flip={() => flip(i)} {...tile} />
             ))}
             {completed && (
-              <div className="absolute border bg-indigo-100 bg-opacity-40 backdrop-blur top-0 left-0 w-full h-full flex items-center justify-center">
-                <p className="text-center font-bold text-3xl text-indigo-500">
+              <div className='absolute border bg-indigo-100 bg-opacity-40 backdrop-blur top-0 left-0 w-full h-full flex items-center justify-center'>
+                <p className='text-center font-bold text-3xl text-indigo-500'>
                   Game Complete!
                 </p>
               </div>
             )}
           </div>
 
-          <div className="col-span-full flex justify-between">
+          <div className='col-span-full flex justify-between'>
             <button
-              className="underline font-semibold"
+              className='underline font-semibold'
               onClick={() => setShowScores(true)}
             >
               View mode&apos;s best scores
             </button>
             <button
-              className="bg-indigo-200 px-3 py-1 rounded-lg active:scale-95"
+              className='bg-indigo-200 px-3 py-1 rounded-lg active:scale-95'
               onClick={() => {
                 end();
                 setModeCount(null);
@@ -346,15 +346,15 @@ export function PlayScreen({
           </div>
 
           {showScores && (
-            <div className="max-w-[23rem] w-full h-[26rem] p-6 py-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg border-2 border-indigo-400 flex flex-col">
-              <div className="w-full">
-                <h3 className="font-semibold text-xl mb-4">{modeName} Mode</h3>
+            <div className='max-w-[23rem] w-full h-[26rem] p-6 py-12 fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-xl rounded-lg border-2 border-indigo-400 flex flex-col'>
+              <div className='w-full'>
+                <h3 className='font-semibold text-xl mb-4'>{modeName} Mode</h3>
                 <div>
-                  {!bestScores.length ? (
+                  {!bestScores?.length ? (
                     "No data"
                   ) : (
-                    <ul className="text-lg">
-                      {bestScores.map((score, index) => (
+                    <ul className='text-lg'>
+                      {bestScores?.map((score, index) => (
                         <li key={index}>{score}</li>
                       ))}
                     </ul>
@@ -362,7 +362,7 @@ export function PlayScreen({
                 </div>
               </div>
               <button
-                className="mt-auto bg-indigo-100 w-fit p-2 rounded-lg w-24 mx-auto"
+                className='mt-auto bg-indigo-100 w-fit p-2 rounded-lg w-24 mx-auto'
                 onClick={() => setShowScores(false)}
               >
                 Close
@@ -374,3 +374,4 @@ export function PlayScreen({
     </>
   );
 }
+

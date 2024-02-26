@@ -75,11 +75,16 @@ export function StartScreen({ start, setModeCount, setModeName }) {
   );
 }
 
-export function PlayScreen({ end, tileCount, modeTitle }) {
+export function PlayScreen({ end, tileCount, modeName }) {
   const [tiles, setTiles] = useState(null);
   const [tryCount, setTryCount] = useState(0);
 
-  const bestScore = localStorage.getItem("bestScore");
+  const bestScore =
+    modeName == "Easy"
+      ? localStorage.getItem("easyBestScore")
+      : modeName == "Medium"
+      ? localStorage.getItem("mediumBestScore")
+      : localStorage.getItem("hardBestScore");
 
   const getTiles = (tileCount) => {
     // Throw error if count is not even.
@@ -143,11 +148,18 @@ export function PlayScreen({ end, tileCount, modeTitle }) {
           // If all tiles are matched, the game is over.
           if (newTiles.every((tile) => tile.state === "matched")) {
             // First game played, set best score.
-            !bestScore && localStorage.setItem("bestScore", tryCount + 1);
+            !bestScore &&
+              localStorage.setItem(
+                `${modeName.toLowerCase()}BestScore`,
+                tryCount + 1
+              );
 
             // Compare existing best score with current tries
             bestScore && Number(bestScore) > tryCount
-              ? localStorage.setItem("bestScore", tryCount + 1)
+              ? localStorage.setItem(
+                  `${modeName.toLowerCase()}BestScore`,
+                  tryCount + 1
+                )
               : null;
             setTimeout(end, 0);
           }
@@ -170,7 +182,7 @@ export function PlayScreen({ end, tileCount, modeTitle }) {
       <div className='min-h-[100dvh] w-screen p-8 grid place-items-center text-indigo-500 text-center'>
         <div className='max-w-[21rem] grid grid-cols-6 gap-y-5'>
           <h1 className='mb-4 col-span-full font-bold text-3xl'>
-            <span className='mr-2'>{modeTitle}</span>
+            <span className='mr-2'>{modeName}</span>
             Mode
           </h1>
           <span className='col-span-3 flex items-center gap-2'>
